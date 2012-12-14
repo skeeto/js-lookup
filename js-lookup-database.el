@@ -102,6 +102,7 @@
     (js-lookup/category Uint8Array)
     (js-lookup/category Uint8ClampedArray))
 
+  ;; Events
   (js-lookup/root "Mozilla_event_reference/"
     (js-lookup/entries
       SVGAbort SVGError SVGLoad SVGResize SVGScroll SVGUnload SVGZoom abort
