@@ -15,21 +15,31 @@
 (defvar js-lookup-root (file-name-directory load-file-name)
   "Data root directory for JavaScript lookup.")
 
-(defvar js-lookup-base-url "https://developer.mozilla.org/en-US/docs/"
-  "Root for JavaScript item lookups.")
+(defmacro js-lookup-with-base (url &rest body)
+  (declare (indent defun)))
 
 (defvar js-lookup-db
+  ;; This evaluates a custom DSL, which is why it's messy.
   (with-temp-buffer
-    (let ((standard-input (current-buffer))
-          (db (expand-file-name "js-lookup-database.el" js-lookup-root))
-          (table (make-hash-table :test 'equal)))
-      (insert-file-contents-literally db)
-      (labels ((stringify (name) (if (symbolp name) (symbol-name name) name)))
-        (loop while (< (point) (point-max))
-              for key = (stringify (read))
-              for url = (setf (gethash key table) (stringify (read)))
-              do (skip-chars-forward " \t\r\n\f")
-              finally (return table)))))
+    (insert-file-contents-literally
+     (expand-file-name "js-lookup-database.el" js-lookup-root))
+    (flet ((s (symbol) (symbol-name symbol))
+           (sc (symbol) (remove ?_ (symbol-name symbol))))
+      (eval
+       `(let ((path "")
+              (table (make-hash-table :test 'equal)))
+          (macrolet ((root (part &rest body)
+                       `(let ((path (concat path ,part))) ,@body))
+                     (category (name &rest items)
+                       `(progn
+                          (puthash (concat ,(s name))
+                                   (concat path ,(s name)) table)
+                          ,@(loop for item in items collect
+                              `(puthash (concat ,(s name) "." ,(s item))
+                                        (concat path ,(s name) "/" ,(sc item))
+                                        table)))))
+            ,(read (current-buffer)))
+          table))))
   "Lookup database mapping items to look up against their URLs.")
 
 (defvar js-lookup-list
@@ -40,6 +50,6 @@
   "Lookup something related to JavaScript. If called
 interactively, prompts the user for an item to look up."
   (interactive (list (ido-completing-read "JS: " js-lookup-list nil t)))
-  (browse-url (concat js-lookup-base-url (gethash select js-lookup-db))))
+  (browse-url (gethash select js-lookup-db)))
 
 ;;; js-lookup.el ends here
