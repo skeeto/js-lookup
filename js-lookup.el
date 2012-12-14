@@ -60,10 +60,13 @@ path. This path, `js-lookup-path' is initially the empty string."
                  collect `(js-lookup/entry ,key ,value))))))
 
 (font-lock-add-keywords 'emacs-lisp-mode
-  '(("\\<\\(js-lookup/category\\)[ \t\r\n\f]+\\([^ \t\r\n\f()]+\\)"
+  '(("(\\<\\(js-lookup/category\\)\\> +\\([^ ()]+\\)"
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face))
-    ("js-lookup/root" . font-lock-keyword-face)))
+    ("(\\<\\(js-lookup/root\\)\\>"
+     (1 'font-lock-keyword-face))
+    ("(\\<\\(js-lookup/entry\\)\\>"
+     (1 'font-lock-keyword-face))))
 
 (provide 'js-lookup)
 
