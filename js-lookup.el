@@ -52,6 +52,12 @@ path. This path, `js-lookup-path' is initially the empty string."
                                  (list js-lookup-path ,name "/" ,clean)
                                  js-lookup-db)))))
 
+(font-lock-add-keywords 'emacs-lisp-mode
+  '(("\\<\\(js-lookup/category\\)[ \t\r\n\f]+\\([^ \t\r\n\f()]+\\)"
+     (1 'font-lock-keyword-face)
+     (2 'font-lock-variable-name-face))
+    ("js-lookup/root" . font-lock-keyword-face)))
+
 (provide 'js-lookup)
 
 ;; Load the database
