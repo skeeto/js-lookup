@@ -44,6 +44,14 @@ path. This path, `js-lookup-path' is initially the empty string."
   (declare (indent defun))
   `(let ((js-lookup-path (cons ,dir js-lookup-path))) ,@body))
 
+(defmacro js-lookup/entries (&rest items)
+  "Add a number of flat entries to the database on top of the current path."
+  (declare (indent defun))
+  (cons 'progn
+        (loop for item in items
+              for name = (format "%s" item)
+              collect `(js-lookup/entry ,name ,name))))
+
 (defmacro js-lookup/category (category &rest items)
   "Register CATEGORY in the database along with each of its ITEMS."
   (declare (indent defun))
@@ -63,6 +71,8 @@ path. This path, `js-lookup-path' is initially the empty string."
     ("(\\<\\(js-lookup/root\\)\\>"
      (1 'font-lock-keyword-face))
     ("(\\<\\(js-lookup/entry\\)\\>"
+     (1 'font-lock-keyword-face))
+    ("(\\<\\(js-lookup/entries\\)\\>"
      (1 'font-lock-keyword-face))))
 
 (provide 'js-lookup)
