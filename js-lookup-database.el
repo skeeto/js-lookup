@@ -16,7 +16,7 @@
     (js-lookup/category Array
       concat constructor every filter forEach indexOf join lastIndexOf length
       map pop push reduce reduceRight reverse shift slice some sort splice
-      toLocaleString toString unshift)
+      toString unshift)
     (js-lookup/category Boolean
       constructor toString valueOf)
     (js-lookup/category Date
@@ -39,8 +39,8 @@
       constructor hasOwnProperty isPrototypeOf propertyIsEnumerable
       toLocaleString toString valueOf)
     (js-lookup/category RegExp
-      compile constructor exec global ignoreCase lastIndex multiline source
-      test toString)
+      constructor exec global ignoreCase lastIndex multiline source test
+      toString)
     (js-lookup/category String
       anchor big blink bold charAt charCodeAt concat constructor fixed
       fontcolor fontsize indexOf italics lastIndexOf length link localeCompare
