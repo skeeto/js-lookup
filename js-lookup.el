@@ -21,14 +21,13 @@
 (defvar js-lookup-path ()
   "Current documentation path while loading the database (dynamically bound).")
 
-(defvar js-lookup-list ()
-  "List of items that can be looked up. (The keys of `js-lookup-db'.)")
-
 ;;;###autoload
 (defun js-lookup (select)
   "Lookup something related to JavaScript. If called
 interactively, prompts the user for an item to look up."
-  (interactive (list (ido-completing-read "JS: " js-lookup-list nil t)))
+  (interactive
+   (let ((keys (loop for key being the hash-keys of js-lookup-db collect key)))
+     (list (ido-completing-read "Describe JavaScript: " keys nil t))))
   (browse-url (apply #'concat (reverse (gethash select js-lookup-db)))))
 
 ;; Database DSL macros
@@ -37,9 +36,7 @@ interactively, prompts the user for an item to look up."
   "Add an entry ITEM to the database, appending PATH to the
 current documentation path."
   (let ((name (format "%s" item)))
-    `(progn
-       (push ,name js-lookup-list)
-       (puthash ,name (cons ,path js-lookup-path) js-lookup-db))))
+    (puthash ,name (cons ,path js-lookup-path) js-lookup-db)))
 
 (defmacro js-lookup/root (dir &rest body)
   "Append DIR to the currently established documentation
