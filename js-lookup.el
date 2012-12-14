@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(eval-when-compile (require 'cl))
+(require 'cl)
 (require 'ido)
 
 (defvar js-lookup-root (file-name-directory load-file-name)
