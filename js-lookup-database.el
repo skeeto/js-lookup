@@ -48,7 +48,17 @@
       fontcolor fontsize indexOf italics lastIndexOf length link localeCompare
       match replace search slice small split strike sub substr substring sup
       toLocaleLowerCase toLocaleUpperCase toLowerCase toString toUpperCase trim
-      trimLeft trimRight valueOf))
+      trimLeft trimRight valueOf)
+
+    ;; Error Objects
+    (js-lookup/category Error
+      name constructor toString message)
+    (js-lookup/category EvalError)
+    (js-lookup/category RangeError)
+    (js-lookup/category ReferenceError)
+    (js-lookup/category SyntaxError)
+    (js-lookup/category TypeError)
+    (js-lookup/category URIError))
 
   ;; Typed Arrays -- this section on MDN is mostly empty
   (js-lookup/root "JavaScript_typed_arrays/"
