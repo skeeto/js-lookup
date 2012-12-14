@@ -52,13 +52,24 @@
 
     ;; Error Objects
     (js-lookup/category Error
-      name constructor toString message)
+      constructor message name toString)
     (js-lookup/category EvalError)
     (js-lookup/category RangeError)
     (js-lookup/category ReferenceError)
     (js-lookup/category SyntaxError)
     (js-lookup/category TypeError)
-    (js-lookup/category URIError))
+    (js-lookup/category URIError)
+
+    ;; Other Objects
+    (js-lookup/category Infinity
+      NEGATIVE_INFINITY POSITIVE_INFINITY)
+    (js-lookup/category JSON
+      parse stringify)
+    (js-lookup/category Math
+      E LN10 LN2 LOG10E LOG2E PI SQRT1_2 SQRT2 abs acos asin atan atan2 ceil
+      cos exp floor log max min pow random round sin sqrt tan)
+    (js-lookup/category NaN)
+    (js-lookup/category undefined))
 
   ;; Typed Arrays -- this section on MDN is mostly empty
   (js-lookup/root "JavaScript_typed_arrays/"
