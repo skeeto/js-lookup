@@ -12,6 +12,8 @@
 (require 'js-lookup)
 
 (js-lookup/root "https://developer.mozilla.org/en-US/docs/"
+
+  ;; Global Objects
   (js-lookup/root "JavaScript/Reference/Global_Objects/"
     (js-lookup/category Array
       concat constructor every filter forEach indexOf join lastIndexOf length
@@ -46,6 +48,20 @@
       fontcolor fontsize indexOf italics lastIndexOf length link localeCompare
       match replace search slice small split strike sub substr substring sup
       toLocaleLowerCase toLocaleUpperCase toLowerCase toString toUpperCase trim
-      trimLeft trimRight valueOf)))
+      trimLeft trimRight valueOf))
+
+  ;; Typed Arrays -- this section on MDN is mostly empty
+  (js-lookup/root "JavaScript_typed_arrays/"
+    (js-lookup/category ArrayBuffer)
+    (js-lookup/category DataView)
+    (js-lookup/category Float32Array)
+    (js-lookup/category Float64Array)
+    (js-lookup/category Int16Array)
+    (js-lookup/category Int32Array)
+    (js-lookup/category Int8Array)
+    (js-lookup/category Uint16Array)
+    (js-lookup/category Uint32Array)
+    (js-lookup/category Uint8Array)
+    (js-lookup/category Uint8ClampedArray)))
 
 ;;; js-lookup-database.el ends here
