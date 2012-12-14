@@ -128,6 +128,53 @@
       show stalled storage submit success suspend timeupdate touchcancel
       touchend touchenter touchleave touchmove touchstart transitionend
       unload updateready upgradeneeded userproximity versionchange
-      visibilitychange volumechange waiting wheel)))
+      visibilitychange volumechange waiting wheel))
+
+  ;; DOM
+  (js-lookup/root "DOM/"
+    (let ((js-lookup-path-seperator "."))
+      (js-lookup/category document
+        URL activeElement alinkColor all anchors applets attributes baseURI
+        bgColor body characterSet charset childNodes compatMode cookie
+        defaultCharset defaultView designMode dir doctype documentElement
+        documentURI domain embeds fgColor firstChild forms head height images
+        implementation inputEncoding lastChild lastModified linkColor links
+        localName location namespaceURI nextSibling nodeName nodeType nodeValue
+        ownerDocument parentElement parentNode plugins preferredStylesheetSet
+        prefix previousSibling readyState referrer scripts
+        selectedStylesheetSet styleSheets textContent title vlinkColor
+        width xmlEncoding xmlStandalone xmlVersion)
+      (js-lookup/category Node
+        appendChild attributes baseURI childNodes cloneNode
+        compareDocumentPosition contains firstChild getUserData
+        hasAttributes hasChildNodes insertBefore isDefaultNamespace
+        isEqualNode isSameNode isSupported lastChild localName
+        lookupNamespaceURI lookupPrefix namespaceURI nextSibling nodeName
+        nodePrincipal nodeType nodeValue normalize ownerDocument
+        parentElement parentNode prefix previousSibling removeChild
+        replaceChild setUserData textContent)
+      (js-lookup/category element
+        aLink accessKey attributes background baseURI bgColor
+        childElementCount childNodes children classList className
+        clientHeight clientLeft clientTop clientWidth contentEditable
+        dataset dir draggable firstChild firstElementChild hidden id
+        innerHTML innerText isContentEditable lang lastChild
+        lastElementChild link localName namespaceURI nextElementSibling
+        nextSibling nodeName nodeType nodeValue offsetHeight offsetLeft
+        offsetParent offsetTop offsetWidth onabort onbeforecopy onbeforecut
+        onbeforepaste onbeforeunload onblur onchange onclick oncontextmenu
+        oncopy oncut ondblclick ondrag ondragend ondragenter ondragleave
+        ondragover ondragstart ondrop onerror onfocus onhashchange oninput
+        oninvalid onkeydown onkeypress onkeyup onload onmessage onmousedown
+        onmousemove onmouseout onmouseover onmouseup onmousewheel onoffline
+        ononline onpaste onpopstate onreset onresize onscroll onsearch
+        onselect onselectstart onstorage onsubmit onunload outerHTML
+        outerText ownerDocument parentElement parentNode prefix
+        previousElementSibling previousSibling scrollHeight scrollLeft
+        scrollTop scrollWidth spellcheck style tabIndex tagName text
+        textContent title translate vLink)
+      (js-lookup/category console
+        debug dir error group groupCollapsed groupEnd info log time timeEnd
+        trace warn))))
 
 ;;; js-lookup-database.el ends here

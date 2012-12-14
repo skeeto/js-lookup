@@ -21,6 +21,12 @@
 (defvar js-lookup-path ()
   "Current documentation path while loading the database (dynamically bound).")
 
+(defvar js-lookup-category-seperator "."
+  "Separator between category and item name in the selection list.")
+
+(defvar js-lookup-path-seperator "/"
+  "Separator between category and item name in the path.")
+
 ;;;###autoload
 (defun js-lookup (select)
   "Lookup something related to JavaScript. If called
@@ -58,9 +64,10 @@ path. This path, `js-lookup-path' is initially the empty string."
   (let ((name (format "%s" category)))
     `(progn
        (js-lookup/entry ,name ,name)
-       (js-lookup/root ,(concat name "/")
+       (js-lookup/root ,(concat name js-lookup-path-seperator)
          ,@(loop for item in items
-                 for key = (format "%s.%s" name item)
+                 for key = (format "%s%s%s" name
+                                   js-lookup-category-seperator item)
                  for value = (remove ?_ (format "%s" item))
                  collect `(js-lookup/entry ,key ,value))))))
 
