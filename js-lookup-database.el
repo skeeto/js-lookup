@@ -69,7 +69,18 @@
       E LN10 LN2 LOG10E LOG2E PI SQRT1_2 SQRT2 abs acos asin atan atan2 ceil
       cos exp floor log max min pow random round sin sqrt tan)
     (js-lookup/category NaN)
-    (js-lookup/category undefined))
+    (js-lookup/category undefined)
+
+    ;; Non-contructor Functions
+    (js-lookup/category decodeURI)
+    (js-lookup/category decodeURIComponent)
+    (js-lookup/category encodeURI)
+    (js-lookup/category encodeURIComponent)
+    (js-lookup/category eval)
+    (js-lookup/category isFinite)
+    (js-lookup/category isNaN)
+    (js-lookup/category parseFloat)
+    (js-lookup/category parseInt))
 
   ;; Typed Arrays -- this section on MDN is mostly empty
   (js-lookup/root "JavaScript_typed_arrays/"
