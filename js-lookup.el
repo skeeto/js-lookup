@@ -36,7 +36,7 @@ interactively, prompts the user for an item to look up."
   "Add an entry ITEM to the database, appending PATH to the
 current documentation path."
   (let ((name (format "%s" item)))
-    (puthash ,name (cons ,path js-lookup-path) js-lookup-db)))
+    `(puthash ,name (cons ,path js-lookup-path) js-lookup-db)))
 
 (defmacro js-lookup/root (dir &rest body)
   "Append DIR to the currently established documentation
