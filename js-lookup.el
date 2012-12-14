@@ -18,7 +18,7 @@
 (defvar js-lookup-db (make-hash-table :test 'equal)
   "Lookup database mapping items to look up against their URLs.")
 
-(defvar js-lookup-path ""
+(defvar js-lookup-path ()
   "Current documentation path while loading the database (dynamically bound).")
 
 (defvar js-lookup-list ()
@@ -29,28 +29,35 @@
   "Lookup something related to JavaScript. If called
 interactively, prompts the user for an item to look up."
   (interactive (list (ido-completing-read "JS: " js-lookup-list nil t)))
-  (browse-url (apply #'concat (gethash select js-lookup-db))))
+  (browse-url (apply #'concat (reverse (gethash select js-lookup-db)))))
 
 ;; Database DSL macros
+
+(defmacro js-lookup/entry (item path)
+  "Add an entry ITEM to the database, appending PATH to the
+current documentation path."
+  (let ((name (format "%s" item)))
+    `(progn
+       (push ,name js-lookup-list)
+       (puthash ,name (cons ,path js-lookup-path) js-lookup-db))))
 
 (defmacro js-lookup/root (dir &rest body)
   "Append DIR to the currently established documentation
 path. This path, `js-lookup-path' is initially the empty string."
   (declare (indent defun))
-  `(let ((js-lookup-path (concat js-lookup-path ,dir))) ,@body))
+  `(let ((js-lookup-path (cons ,dir js-lookup-path))) ,@body))
 
 (defmacro js-lookup/category (category &rest items)
   "Register CATEGORY in the database along with each of its ITEMS."
   (declare (indent defun))
-  (let ((name (symbol-name category)))
+  (let ((name (format "%s" category)))
     `(progn
-       (puthash ,name (list js-lookup-path ,name) js-lookup-db)
-       ,@(loop for item in items
-               for string = (symbol-name item)
-               for clean = (remove ?_ string)
-               collect `(puthash (concat ,name "." ,string)
-                                 (list js-lookup-path ,name "/" ,clean)
-                                 js-lookup-db)))))
+       (js-lookup/entry ,name ,name)
+       (js-lookup/root ,(concat name "/")
+         ,@(loop for item in items
+                 for key = (format "%s.%s" name item)
+                 for value = (remove ?_ (format "%s" item))
+                 collect `(js-lookup/entry ,key ,value))))))
 
 (font-lock-add-keywords 'emacs-lisp-mode
   '(("\\<\\(js-lookup/category\\)[ \t\r\n\f]+\\([^ \t\r\n\f()]+\\)"
@@ -60,10 +67,7 @@ path. This path, `js-lookup-path' is initially the empty string."
 
 (provide 'js-lookup)
 
-;; Load the database
 (eval-when (load eval)
-  (load-file (expand-file-name "js-lookup-database.el" js-lookup-root))
-  (setq js-lookup-list
-        (loop for key being the hash-keys of js-lookup-db collect key)))
+  (load-file (expand-file-name "js-lookup-database.el" js-lookup-root)))
 
 ;;; js-lookup.el ends here
