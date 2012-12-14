@@ -1,20 +1,25 @@
-;; When editing this file, it might help to eval these first.
-;;
-;;   (defmacro root (url &rest body)
-;;     (declare (indent defun)))
-;;
-;;   (defmacro category (url &rest body)
-;;     (declare (indent defun)))
+;;; js-lookup-database.el --- URL database for js-lookup
 
-(root "https://developer.mozilla.org/en-US/docs/"
-  (root "JavaScript/Reference/Global_Objects/"
-    (category Array
+;; This is free and unencumbered software released into the public domain.
+
+;;; Commentary:
+
+;; The s-expression below maps JavaScript concepts to URLs on the
+;; Mozilla Developer Network (MDN) wiki.
+
+;;; Code:
+
+(require 'js-lookup)
+
+(js-lookup/root "https://developer.mozilla.org/en-US/docs/"
+  (js-lookup/root "JavaScript/Reference/Global_Objects/"
+    (js-lookup/category Array
       concat constructor every filter forEach indexOf join lastIndexOf length
       map pop push reduce reduceRight reverse shift slice some sort splice
       toLocaleString toString unshift)
-    (category Boolean
+    (js-lookup/category Boolean
       constructor toString valueOf)
-    (category Date
+    (js-lookup/category Date
       constructor getDate getDay getFullYear getHours getMilliseconds
       getMinutes getMonth getSeconds getTime getTimezoneOffset getUTCDate
       getUTCDay getUTCFullYear getUTCHours getUTCMilliseconds getUTCMinutes
@@ -24,21 +29,23 @@
       setUTCSeconds setYear toDateString toGMTString toISOString toJSON
       toLocaleDateString toLocaleString toLocaleTimeString toString
       toTimeString toUTCString valueOf)
-    (category Function
+    (js-lookup/category Function
       apply arguments bind call caller constructor length name toString)
-    (category Number
+    (js-lookup/category Number
       constructor toExponential toFixed toLocaleString toPrecision toString
       valueOf)
-    (category Object
+    (js-lookup/category Object
       __defineGetter__ __defineSetter__ __lookupGetter__ __lookupSetter__
       constructor hasOwnProperty isPrototypeOf propertyIsEnumerable
       toLocaleString toString valueOf)
-    (category RegExp
+    (js-lookup/category RegExp
       compile constructor exec global ignoreCase lastIndex multiline source
       test toString)
-    (category String
+    (js-lookup/category String
       anchor big blink bold charAt charCodeAt concat constructor fixed
       fontcolor fontsize indexOf italics lastIndexOf length link localeCompare
       match replace search slice small split strike sub substr substring sup
       toLocaleLowerCase toLocaleUpperCase toLowerCase toString toUpperCase trim
       trimLeft trimRight valueOf)))
+
+;;; js-lookup-database.el ends here
