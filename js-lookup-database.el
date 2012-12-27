@@ -17,9 +17,9 @@
     ;; Global Objects
     (js-lookup/root "Global_Objects/"
       (js-lookup/category Array
-        concat constructor every filter forEach indexOf join lastIndexOf length
-        map pop push reduce reduceRight reverse shift slice some sort splice
-        toString unshift)
+        concat constructor create every filter forEach indexOf join
+        lastIndexOf length map pop push reduce reduceRight reverse shift
+        slice some sort splice toString unshift)
       (js-lookup/category Boolean
         constructor toString valueOf)
       (js-lookup/category Date
